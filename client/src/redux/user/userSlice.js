@@ -1,0 +1,31 @@
+import {createSlice} from "@reduxjs/toolkit";
+
+// initial state
+const initialState ={
+        currentUser:null,
+        error:null,
+        loading:false,
+};
+
+const userSlice=createSlice({
+        name:'user',
+         initialState,
+         reducers:{
+                signInStart:(state)=>{
+                        state.loading=true;
+                },
+                signInSuccess:(state,action)=>{
+                        // action is the datan we get when we receive the data from the databse 
+                        state.currentUser=action.payload;
+                        state.loading=false;
+                        state.error=null;
+                },
+                signInfailure:(state,action)=>{
+                        state.error=action.payload;
+                        state.loading=false;
+
+                }
+         }
+})
+export const {signInStart,signInSuccess,signInfailure}=userSlice.actions;
+export default userSlice.reducer;
