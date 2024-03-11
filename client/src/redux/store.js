@@ -25,3 +25,4 @@ export const store = configureStore({
 
 export const persistor=persistStore(store);
 // this persistor is going to store persistedReducer
+// redux persist :helps us to store the user data inside the local storage.

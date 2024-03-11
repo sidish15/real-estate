@@ -42,6 +42,8 @@ if(!validPassword)return next(errorHandler(401,'Wrong Credentials'));
 const token=jwt.sign({id:validUser._id},process.env.JWT_SECRET);
 
 const {password:pass,...rest}=validUser._doc;
+console.log(rest);
+// we dont wanna send the password ..thats why we are separating 
 // password:pass bc password named variable had already declared before 
 
 res
@@ -55,3 +57,48 @@ res
 
 }
 
+export const google=async(req,res,next)=>{
+     
+try{
+     const user=await User.findOne({email:req.body.email})
+     if(user){
+// sign in 
+const token=jwt.sign({id:user._id},process.env.JWT_SECRET);
+console.log(user);
+const {password,...rest}=user._doc;
+const newUser=new User({username:req.body.username})
+
+res
+.cookie('access_token',token,{httpOnly:true})
+.status(200)
+.json(rest);
+
+     }else{
+// create user
+// generating password bc google doesnt give password
+const generatedPassword=Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8)
+const hashedPassword=bcryptjs.hashSync(generatedPassword,10);
+
+// new user create
+const newUser=new User({username:req.body.name.split(" ").join("").toLowerCase()+Math.random().toString(36).slice(-4),
+// username was like siddharth singh (from google auth) but we want to make the username look like username
+email:req.body.email,
+password:hashedPassword,
+avatar:req.body.photo
+});
+
+// new user saved
+await newUser.save();
+const token=jwt.sign({id:newUser._id},process.env.JWT_SECRET);
+const {password:pass,...rest}=newUser._doc;
+res
+.cookie('access_token',token,{httpOnly:true})
+.status(200)
+.json(rest);
+
+
+     }
+}catch(error){
+     next(error);
+}
+}
