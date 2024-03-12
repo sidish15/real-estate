@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import userRouter from "./routes/user.route.js"
 //as user.route.js has exported its router defualt so we just import it in the variable named userRouter
 import authRouter from "./routes/auth.route.js"
+import cookieParser from "cookie-parser";
 
 dotenv.config();//initilizing dotenv
 const app=express();
@@ -11,6 +12,8 @@ const app=express();
 //we are not allowed to send any JSON to the server
 //we need to allow the JSON as the input 
 app.use(express.json())
+
+app.use(cookieParser());//now u can get the inf from the cookie
 
 mongoose.connect(process.env.MONGO).then(()=>{
         console.log(`Connected to MongoDB`)

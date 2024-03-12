@@ -13,7 +13,7 @@ const Profile = () => {
   // console.log(filePerc);
   //   console.log(file);
   const [formData, setFormData] = useState({}) //for updating the formdata acc to new profile
-// console.log(formData);
+// console.log(formData)
 // console.log(filePerc);
 // console.log(fileUploadError);
   useEffect(() => {
