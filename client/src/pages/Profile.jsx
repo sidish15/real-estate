@@ -13,16 +13,16 @@ const Profile = () => {
   // console.log(filePerc);
   //   console.log(file);
   const [formData, setFormData] = useState({}) //for updating the formdata acc to new profile
-console.log(formData);
+// console.log(formData);
 // console.log(filePerc);
 // console.log(fileUploadError);
   useEffect(() => {
     if (file) {
-      handleFileUpload();
+      handleFileUpload(file);
     }
   }, [file])
 
-  const handleFileUpload = () => {
+  const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name //will produce always unique name
     const storageRef = ref(storage, fileName)
