@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import userRouter from "./routes/user.route.js"
 //as user.route.js has exported its router defualt so we just import it in the variable named userRouter
 import authRouter from "./routes/auth.route.js"
-import listingRouter from "./routes/listing.route.js"
+import ListingRouter from "./routes/listing.route.js"
 import cookieParser from "cookie-parser";
 dotenv.config();//initilizing dotenv
 
@@ -28,7 +28,7 @@ app.listen(3000,()=>{
 
 app.use("/api/user",userRouter)
 app.use("/api/auth",authRouter);
-app.use("/api/listing",listingRouter);
+app.use("/api/listing",listingRouter)
 
 // middleware
 // err = the error which we will pass in next function
