@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase.js"
-import { updateUserStart,updateUserSuccess,updateUserFailure, signInfailure, signInSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from '../redux/user/userSlice.js'
+import { updateUserStart,updateUserSuccess,updateUserFailure, signInfailure, signInSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, signInStart, signOutUserFailure, signOutUserSuccess, signOutUserStart } from '../redux/user/userSlice.js'
 // import {useNavigate} from 'react-router-dom'
 
 
@@ -91,6 +91,7 @@ const res=await fetch(`/api/user/delete/${currentUser._id}`,{
 method:'DELETE',
 })
 const data=res.json();
+
 if(data.success===false){
   dispatch(deleteUserFailure(data.message))
   return ;
@@ -98,6 +99,22 @@ if(data.success===false){
 dispatch(deleteUserSuccess(data));
 }catch(error){
   dispatch(deleteUserFailure(error.message))
+}
+  }
+
+
+const handleSignOut=async()=>{
+try{
+  dispatch(signOutUserStart())
+const res=await fetch('/api/auth/signout')
+const data=res.json();
+// console.log(data.success); //undefined
+if(data.success===false){
+  dispatch(signOutUserFailure(data.message))
+}
+dispatch(signOutUserSuccess(data))
+}catch(error){
+dispatch(signOutUserFailure(error.message))
 }
   }
 
@@ -150,7 +167,7 @@ dispatch(deleteUserSuccess(data));
       </form>
       <div className='flex justify-between mt-5'>
         <span className='text-red-700 cursor-pointer' onClick={handleDeleteUser}>Delete Account</span>
-        <span className='text-red-700 cursor-pointer'>Sign Out</span>
+        <span className='text-red-700 cursor-pointer' onClick={handleSignOut}>Sign Out</span>
       </div>
 <p className='text-red-700 mt-5'>{error ?error :""}</p>
 <p className='text-green-700 mt-5'>{updateSuccess ?"User is updated successfully" :""}</p>
