@@ -5,7 +5,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/
 import { app } from "../firebase.js"
 import { updateUserStart,updateUserSuccess,updateUserFailure, signInfailure, signInSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, signInStart, signOutUserFailure, signOutUserSuccess, signOutUserStart } from '../redux/user/userSlice.js'
 // import {useNavigate} from 'react-router-dom'
-
+import {Link} from "react-router-dom"
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -161,7 +161,12 @@ dispatch(signOutUserFailure(error.message))
         disabled:opacity-80'>
           {loading?"loading.." :"Update"}
           </button>
-
+          <Link to={"/create-listing"} className='bg-green-700 text-white rounded-lg p-3 
+          text-center uppercase hover:opacity-95 disabled:opacity-50' >
+          
+           Create Listing
+          </Link>
+        
 
 
       </form>
