@@ -136,22 +136,22 @@ const Profile = () => {
     }
   }
 
-  const handleListingDelete=async (listingId)=>{
-    try{
-const res=await fetch(`/api/listing/delete/${listingId}`,{
-  method:'DELETE',
-})
-const data=await res.json();
-if(data.success===false){
-  console.log(data.message);
-  return ;
-}
-setUserListings((prev)=>
-prev.filter((listing)=>listing.id !== listingId)
-)
-console.log("deleted");
-    }catch(error){
-console.log(error.message);
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      })
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setUserListings((prev) =>
+        prev.filter((listing) => listing.id !== listingId)
+      )
+      console.log("deleted");
+    } catch (error) {
+      console.log(error.message);
     }
   }
   return (
@@ -233,11 +233,15 @@ console.log(error.message);
               <p>{listing.name}</p>
             </Link>
             <div className='flex flex-col items-center'>
-              <button onClick={()=>handleListingDelete(listing._id)}
-               className='text-red-700'>
+              <button onClick={() => handleListingDelete(listing._id)}
+                className='text-red-700'>
                 Delete
-                </button>
-              <button className='text-green-700'>Edit</button>
+              </button>
+              <Link to={`/update-listing/${listing._id}`}>
+              <button className='text-green-700'>
+                Edit
+              </button>
+              </Link>
             </div>
 
           </div>
