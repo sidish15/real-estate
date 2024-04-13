@@ -237,7 +237,8 @@ const Profile = () => {
                 className='text-red-700'>
                 Delete
               </button>
-              <Link to={`/update-listing/${listing._id}`}>
+              <Link to={`/update-listing/${listing._id}`}> 
+              {/* /update-listing/${listing._id}  already defined in app.jsx */}
               <button className='text-green-700'>
                 Edit
               </button>

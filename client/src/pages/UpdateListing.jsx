@@ -1,5 +1,5 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate ,useParams} from 'react-router-dom';
@@ -38,6 +38,7 @@ const UpdateListing = () => {
         const data=await res.json();
         if(data.success===false){
           console.log(data.message);
+          return ;
         }
         setFormData(data)
         }
@@ -157,7 +158,7 @@ const UpdateListing = () => {
       if (data.success === false) {
         setError(error.message)
       }
-      navigate('/listing/${data._id}')
+      navigate(`/listing/${data._id}`)
     } catch (error) {
       setError(error.message);
       setLoading(false)
