@@ -9,7 +9,7 @@ const CreateListing = () => {
   const [files, setFile] = useState([])
   const [imageUploadError, setImageUploadError] = useState(false)
   const [uploading, setUploading] = useState(false)
-  console.log(files);
+  // console.log(files);
   const [formData, setFormData] = useState({
     imageUrls: [],
     name: '',
@@ -90,7 +90,7 @@ const CreateListing = () => {
   }
 
   const handleChange = (e) => {
-    console.log(e.target.id);
+    // console.log(e.target.id);
     if (e.target.id === 'sale' || e.target.id === 'rent') {
       setFormData({
         ...formData,
@@ -141,7 +141,7 @@ const CreateListing = () => {
       if (data.success === false) {
         setError(error.message)
       }
-      navigate('/listing/${data._id}')
+      navigate(`/listing/${data._id}`)
     } catch (error) {
       setError(error.message);
       setLoading(false)
