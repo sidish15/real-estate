@@ -12,7 +12,7 @@ const Header = () => {
                 const urlParams=new URLSearchParams(window.location.search) //previous inf in url
                 urlParams.set('searchTerm',searchTerm) //whatever the previous inf ...set the current one
                 const seachQuery=urlParams.toString(); //as some of them may be number
-                navigate(`search?${seachQuery}`)
+                navigate(`/search?${seachQuery}`)
 
         }
         useEffect(()=>{
