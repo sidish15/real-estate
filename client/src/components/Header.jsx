@@ -10,6 +10,7 @@ const Header = () => {
         const handleSubmit=(e)=>{
                 e.preventDefault() //to prevent refreshing the page
                 const urlParams=new URLSearchParams(window.location.search) //previous inf in url
+                console.log(urlParams);
                 urlParams.set('searchTerm',searchTerm) //whatever the previous inf ...set the current one
                 const seachQuery=urlParams.toString(); //as some of them may be number
                 navigate(`/search?${seachQuery}`)
@@ -21,7 +22,7 @@ const Header = () => {
          if(searchTermFromUrl){
                 setSearchTerm(searchTermFromUrl)
          }
-        },[location.seach])
+        },[location.search])
         return (
                 <header>
                         <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
