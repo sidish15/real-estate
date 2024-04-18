@@ -23,7 +23,7 @@ const ListingItem = ({ listing }) => {
                                         <p className='text-slate-500 mt-2 font-semibold flex items-center'>
                                                 $
                                                 {listing.offer ? listing.discountPrice.toLocaleString('en-US') :
-                                                        listing.regularPrice('en-US')}
+                                                        listing.regularPrice.toLocaleString('en-US')}
                                                 {listing.type === "rent" && ' / month'}
                                         </p>
                                         <div className="text-slate-700 flex gap-4">

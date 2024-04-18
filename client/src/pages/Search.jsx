@@ -16,6 +16,7 @@ const Search = () => {
         })
         const [loading, setLoading] = useState(false)
         const [listings, setListings] = useState([])
+        const [showMore, setShowMore] = useState(false)
         // to make changes in formdata accoring to the searchbar
         //url is changing according to the searchbar (we have already done in the header part)
         // we want to get the inf of the URL and fill the form as well
@@ -50,6 +51,7 @@ const Search = () => {
                 const fetchListings = async () => {
                         try {
                                 setLoading(true)
+                                setShowMore(false)
                                 const searchQuery = urlParams.toString();
                                 const res = await fetch(`/api/listing/get?${searchQuery}`);
                                 const data = await res.json();
@@ -57,6 +59,11 @@ const Search = () => {
                                         console.log(data.message);
                                         setLoading(false)
                                         return;
+                                }
+                                if (data.length > 8) {
+                                        setShowMore(true)
+                                }else{
+                                        setShowMore(false)
                                 }
                                 setListings(data);
                                 setLoading(false)
@@ -94,7 +101,7 @@ const Search = () => {
 
         }
 
-        console.log(sidebardata);
+        // console.log(sidebardata);
         // to store the formdata into url
         const handleSubmit = (e) => {
                 e.preventDefault()
@@ -109,6 +116,20 @@ const Search = () => {
                 // console.log(urlParams);
                 const searchQuery = urlParams.toString();
                 navigate(`/search?${searchQuery}`)
+        }
+        const onShowMoreClick=async()=>{
+                const numberOfListings=listings.length;
+                const startIndex=numberOfListings;
+                const urlParams=new URLSearchParams(location.search);
+                urlParams.set('startIndex',startIndex)
+                const searchQuery=urlParams.toString();
+                const res=await fetch(`/api/listing/get?${searchQuery}`)
+                const data=await res.json();
+                if(data.length<9){
+                        setShowMore(false)
+                }
+                setListings([...listings,...data])
+
         }
 
 
@@ -217,9 +238,15 @@ const Search = () => {
                                         )}
                                         {
                                                 !loading && listings && listings.map((listing) =>
-                                                        (<ListingItem key={listing._id} listing={listing}/>))
+                                                        (<ListingItem key={listing._id} listing={listing} />))
 
                                         }
+                                        {showMore && (
+                                                <button onClick={onShowMoreClick}
+                                                className="text-green-700 hover:underline p-7 w-full">
+                                                        Show More
+                                                </button>
+                                        )}
                                 </div>
                         </div>
                 </div>
