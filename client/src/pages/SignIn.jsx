@@ -37,7 +37,7 @@ try{
   
   //next is to change and convert the response we get to JSON
   const data=await res.json();
-  console.log(data);
+  // console.log(data);
   // data="user created successfully"
   if(data.success===false){
     dispatch(signInfailure(data.message));

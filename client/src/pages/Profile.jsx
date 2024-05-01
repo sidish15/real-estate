@@ -147,7 +147,7 @@ const Profile = () => {
         return;
       }
       setUserListings((prev) =>
-        prev.filter((listing) => listing.id !== listingId)
+        prev.filter((listing) => listing._id !== listingId)
       )
       console.log("deleted");
     } catch (error) {
