@@ -7,39 +7,44 @@ import authRouter from "./routes/auth.route.js"
 import listingRouter from "./routes/listing.route.js"
 import cookieParser from "cookie-parser";
 import path from 'path'
+import cors from 'cors'
 dotenv.config();//initilizing dotenv
 
-
+const PORT = process.env.PORT | 8080
 mongoose.connect(process.env.MONGO).then(() => {
         console.log(`Connected to MongoDB`)
 }).catch((err) => {
         console.log(err);
 })
 
-const __dirname=path.resolve()
+const __dirname = path.resolve()
 
 const app = express();
 //we are not allowed to send any JSON to the server
 //we need to allow the JSON as the input 
+app.use(cors())
 app.use(express.json())
 
 app.use(cookieParser());//now u can get the inf from the cookie
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
         console.log(`Server is running on port 3000`)
 })
 
+app.get('/', (req, res) => {
+        return res.json({ "msg": "Welcome to real estate!" })
+})
 
 app.use("/api/user", userRouter)
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter)
 
 
-app.use(express.static(path.join(__dirname,'/client/dist')))
+app.use(express.static(path.join(__dirname, '/client/dist')))
 
-app.get('*',(req,res)=>{
-        res.sendFile(path.join(__dirname,'client','dist','index.html'))
+app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
 })
 
 

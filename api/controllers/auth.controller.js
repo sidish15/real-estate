@@ -41,7 +41,6 @@ export const signin = async (req, res, next) => {
           const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
 
           const { password: pass, ...rest } = validUser._doc;
-          console.log(rest);
           // we dont wanna send the password ..thats why we are separating 
           // password:pass bc password named variable had already declared before 
 
@@ -63,7 +62,6 @@ export const google = async (req, res, next) => {
           if (user) {
                // sign in 
                const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-               console.log(user);
                const { password, ...rest } = user._doc;
                const newUser = new User({ username: req.body.username })
 

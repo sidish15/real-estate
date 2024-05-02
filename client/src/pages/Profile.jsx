@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import  { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRef } from 'react'
-import { getDownloadURL, getStorage, list, ref, uploadBytesResumable } from 'firebase/storage'
+import { getDownloadURL, getStorage,  ref, uploadBytesResumable } from 'firebase/storage'
 import { app } from "../firebase.js"
-import { updateUserStart, updateUserSuccess, updateUserFailure, signInfailure, signInSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess, signInStart, signOutUserFailure, signOutUserSuccess, signOutUserStart } from '../redux/user/userSlice.js'
+import { updateUserStart, updateUserSuccess, updateUserFailure,  deleteUserFailure, deleteUserStart, deleteUserSuccess,  signOutUserFailure, signOutUserSuccess, signOutUserStart } from '../redux/user/userSlice.js'
 // import {useNavigate} from 'react-router-dom'
 import { Link } from "react-router-dom"
 
@@ -46,10 +46,9 @@ const Profile = () => {
         setFileUploadError(true);
       },
       () => {
-        getDownloadURL(uploadTask.snapshot.ref).then
-          ((downloadURL) =>
-            setFormData({ ...formData, avatar: downloadURL })
-          );
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+          setFormData({ ...formData, avatar: downloadURL })
+        );
       }
     )
     // upload.on ends
@@ -65,7 +64,7 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart())
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-yi19.onrender.com/api/user/update/${currentUser._id}`, {
         // this currentUser we got from useSelector
         method: 'POST',
         headers: {
@@ -89,7 +88,7 @@ const Profile = () => {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-yi19.onrender.com/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       })
       const data = res.json();
@@ -108,7 +107,7 @@ const Profile = () => {
   const handleSignOut = async () => {
     try {
       dispatch(signOutUserStart())
-      const res = await fetch('/api/auth/signout')
+      const res = await fetch('https://real-estate-yi19.onrender.com/api/auth/signout')
       const data = res.json();
       // console.log(data.success); //undefined
       if (data.success === false) {
@@ -123,7 +122,7 @@ const Profile = () => {
   const handleShowListings = async () => {
     try {
       setShowListingError(false)
-      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const res = await fetch(`https://real-estate-yi19.onrender.com/api/user/listings/${currentUser._id}`);
       const data = await res.json();
       if (data.success === false) {
         setShowListingError(true)
@@ -138,7 +137,7 @@ const Profile = () => {
 
   const handleListingDelete = async (listingId) => {
     try {
-      const res = await fetch(`/api/listing/delete/${listingId}`, {
+      const res = await fetch(`https://real-estate-yi19.onrender.com/api/listing/delete/${listingId}`, {
         method: 'DELETE',
       })
       const data = await res.json();
