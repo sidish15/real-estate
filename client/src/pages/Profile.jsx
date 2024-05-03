@@ -124,6 +124,7 @@ const Profile = () => {
       setShowListingError(false)
       const res = await fetch(`https://real-estate-yi19.onrender.com/api/user/listings/${currentUser._id}`);
       const data = await res.json();
+      console.log(data);
       if (data.success === false) {
         setShowListingError(true)
         return;
